@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Restaurant Recommendation System Comparison</title>
+    <style>
+      body { margin: 0; font-family: Arial, sans-serif; color: #173f35; background: #f4f0e8; }
+      .slide { width: 1280px; height: 720px; padding: 56px 72px; box-sizing: border-box; background: #fbf9f4; position: relative; overflow: hidden; }
+      .dark { background: #173f35; color: #fbf9f4; }
+      h1 { font-size: 62px; line-height: 1.02; margin: 0 0 22px; }
+      h2 { font-size: 46px; margin: 0 0 24px; }
+      h3 { font-size: 28px; margin: 0 0 16px; color: #ee775f; }
+      p { font-size: 25px; line-height: 1.35; margin: 0 0 16px; }
+      ul { margin: 20px 0 0; padding-left: 28px; }
+      li { font-size: 25px; line-height: 1.35; margin: 10px 0; }
+      .kicker { color: #ee775f; font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px; }
+      .dark .kicker { color: #dff06c; }
+      .grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 54px; align-items: center; height: 100%; }
+      .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+      .card { background: #ffffff; border: 2px solid #d9d6cc; border-radius: 14px; padding: 24px; min-height: 180px; }
+      .dark .card { background: #244a40; border-color: rgba(255,255,255,.15); }
+      .card strong { display: block; font-size: 25px; margin-bottom: 12px; }
+      .card span { font-size: 20px; line-height: 1.3; color: #6e7771; }
+      .dark .card span { color: rgba(255,255,255,.7); }
+      .diagram { border: 3px solid #cae9d6; border-radius: 22px; padding: 28px; background: #eef8f0; }
+      .step { background: #ffffff; border: 2px solid #bcdcc7; border-radius: 12px; padding: 18px; margin: 14px 0; font-size: 22px; font-weight: 700; }
+      .matrix { width: 100%; border-collapse: collapse; margin-top: 26px; font-size: 20px; }
+      .matrix th, .matrix td { border: 2px solid #d9d6cc; padding: 17px; text-align: left; }
+      .matrix th { background: #173f35; color: white; }
+      .pill { display: inline-block; background: #dff06c; color: #173f35; border-radius: 999px; padding: 10px 18px; font-size: 21px; font-weight: 700; margin: 8px 8px 0 0; }
+      .formula { background: #173f35; color: #fbf9f4; border-radius: 18px; padding: 28px; font-size: 30px; line-height: 1.45; margin: 24px 0; }
+      .formula small { display: block; color: #dff06c; font-size: 19px; margin-top: 12px; }
+      .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+      .calc-box { background: white; border: 2px solid #d9d6cc; border-radius: 14px; padding: 22px; }
+      .calc-box strong { display: block; color: #ee775f; font-size: 24px; margin-bottom: 10px; }
+      .calc-box p { font-size: 22px; }
+      .footer { position: absolute; left: 72px; bottom: 34px; font-size: 16px; color: #6e7771; }
+      .dark .footer { color: rgba(255,255,255,.55); }
+    </style>
+  </head>
+  <body>
+    <section class="slide dark" data-document-role="page" data-label="Title" data-speaker-notes="This project builds a restaurant recommender that helps users choose a venue based on preferences, context, and rating data.">
+      <div class="grid">
+        <div>
+          <div class="kicker">Decision Support System</div>
+          <h1>Restaurant Recommendation System Comparison</h1>
+          <p>Comparing Item-Based Collaborative Filtering, Location-Aware Recommendation, and Hybrid Recommendation.</p>
+          <span class="pill">Item-Based CF</span><span class="pill">Location-Aware</span><span class="pill">Hybrid</span>
+        </div>
+        <div class="diagram">
+          <div class="step">Dining brief</div>
+          <div class="step">Recommendation method</div>
+          <div class="step">Ranked restaurant shortlist</div>
+        </div>
+      </div>
+      <div class="footer">Restaurant Recommender Web App</div>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Problem" data-speaker-notes="Restaurant choice is not only about high ratings. A useful recommender should consider user preference, location, and practical requirements.">
+      <div class="kicker">Problem and Motivation</div>
+      <h2>Restaurant ranking needs more than popularity.</h2>
+      <ul>
+        <li>Users have different cuisine and budget preferences.</li>
+        <li>Distance and constraints affect real dining decisions.</li>
+        <li>Rating-only systems can miss important context.</li>
+        <li>A selectable method helps users compare outcomes.</li>
+        <li>Transparent ranking reasons improve trust.</li>
+      </ul>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Dataset" data-speaker-notes="The system connects multiple CSV datasets that provide behavioral evidence and restaurant attributes.">
+      <div class="kicker">Dataset and Inputs</div>
+      <h2>Data combines users, venues, and ratings.</h2>
+      <div class="cards">
+        <div class="card"><strong>User data</strong><span>Profiles, cuisine preferences, payment preferences, and anonymous matched user history.</span></div>
+        <div class="card"><strong>Restaurant data</strong><span>Location, price, cuisine, parking, accessibility, alcohol, hours, and payment options.</span></div>
+        <div class="card"><strong>Rating data</strong><span>Overall rating, food rating, and service rating used as behavioral evidence.</span></div>
+      </div>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Workflow" data-speaker-notes="The app starts with onboarding, then lets the user switch methods and compare the ranked results.">
+      <div class="kicker">Web App Workflow</div>
+      <h2>From dining brief to ranked shortlist.</h2>
+      <div class="diagram">
+        <div class="step">1. User completes dining brief</div>
+        <div class="step">2. App matches an anonymous profile</div>
+        <div class="step">3. User selects recommendation method</div>
+        <div class="step">4. Results update instantly</div>
+        <div class="step">5. Restaurants can be compared side by side</div>
+      </div>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Item-Based CF" data-speaker-notes="Item-Based CF recommends restaurants similar to restaurants the matched diner liked.">
+      <div class="kicker">Method 1</div>
+      <h2>Item-Based Collaborative Filtering</h2>
+      <ul>
+        <li>Compares restaurants instead of users.</li>
+        <li>Uses shared user-rating patterns.</li>
+        <li>Recommends venues similar to liked restaurants.</li>
+        <li>Works best when enough rating history exists.</li>
+        <li>Less dependent on restaurant attributes.</li>
+      </ul>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Location-Aware" data-speaker-notes="Location-aware recommendation focuses on context, especially distance from the selected dining area.">
+      <div class="kicker">Method 2</div>
+      <h2>Location-Aware Recommendation</h2>
+      <ul>
+        <li>Uses distance from the selected dining area.</li>
+        <li>Rewards nearby restaurants.</li>
+        <li>Still respects cuisine, budget, and constraints.</li>
+        <li>Useful for real-world restaurant decisions.</li>
+        <li>Can work even with sparse rating history.</li>
+      </ul>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Hybrid" data-speaker-notes="The hybrid method blends strengths from rating quality, collaborative evidence, user preferences, and location convenience.">
+      <div class="kicker">Method 3</div>
+      <h2>Hybrid Recommendation</h2>
+      <div class="cards">
+        <div class="card"><strong>Quality</strong><span>Bayesian-adjusted overall, food, and service ratings.</span></div>
+        <div class="card"><strong>Taste</strong><span>Item-based and user-based collaborative signals.</span></div>
+        <div class="card"><strong>Context</strong><span>Preference fit plus travel convenience.</span></div>
+      </div>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Comparison" data-speaker-notes="Each method has a different strength: behavior, context, or balanced decision support.">
+      <div class="kicker">Comparison Criteria</div>
+      <h2>How the three methods differ.</h2>
+      <table class="matrix">
+        <tr><th>Criteria</th><th>Item-Based CF</th><th>Location-Aware</th><th>Hybrid</th></tr>
+        <tr><td>Personal taste</td><td>High</td><td>Medium</td><td>High</td></tr>
+        <tr><td>Sparse data</td><td>Weaker</td><td>Stronger</td><td>Balanced</td></tr>
+        <tr><td>Location context</td><td>Low</td><td>High</td><td>High</td></tr>
+        <tr><td>Decision support</td><td>Behavior focused</td><td>Context focused</td><td>Most complete</td></tr>
+      </table>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Implementation" data-speaker-notes="The web app now lets users choose the recommendation algorithm, and the ranking updates based on that selected method.">
+      <div class="kicker">Web Implementation</div>
+      <h2>The app now supports selectable algorithms.</h2>
+      <ul>
+        <li>Method dropdown added to the control panel.</li>
+        <li>Separate scoring paths for each method.</li>
+        <li>Dynamic result summary and explanations.</li>
+        <li>Hybrid priority tuning enabled only in hybrid mode.</li>
+        <li>Production build verified with Vite.</li>
+      </ul>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Evidence Rating Formula" data-speaker-notes="This slide proves how raw ratings are converted into one comparable score. Overall rating receives the largest weight, then food rating, then service rating.">
+      <div class="kicker">Evidence 1</div>
+      <h2>Composite rating calculation</h2>
+      <div class="formula">
+        Composite Rating = 0.50R + 0.30F + 0.20S
+        <small>R = overall rating, F = food rating, S = service rating</small>
+      </div>
+      <div class="calc-grid">
+        <div class="calc-box"><strong>Example</strong><p>If R = 2, F = 1, S = 2, then score = 0.50(2) + 0.30(1) + 0.20(2) = 1.70 out of 2.</p></div>
+        <div class="calc-box"><strong>Why it matters</strong><p>This creates a single score for each rating record while still keeping food and service as separate evidence.</p></div>
+      </div>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Evidence Item Similarity" data-speaker-notes="This slide proves the Item-Based Collaborative Filtering method. Restaurants are represented as vectors of user ratings, and cosine similarity measures how close two restaurant rating patterns are.">
+      <div class="kicker">Evidence 2</div>
+      <h2>Item-Based CF similarity calculation</h2>
+      <div class="formula">
+        Similarity(A,B) = (A · B) / (||A|| × ||B||)
+        <small>A and B are restaurant rating vectors from shared users.</small>
+      </div>
+      <div class="calc-grid">
+        <div class="calc-box"><strong>Prediction</strong><p>Predicted score = weighted average of restaurants the matched diner already rated, weighted by item similarity.</p></div>
+        <div class="calc-box"><strong>Evidence signal</strong><p>The app counts how many similar restaurant signals support each recommendation.</p></div>
+      </div>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Evidence Location Score" data-speaker-notes="This slide proves the Location-Aware method. Distance is computed using the Haversine formula, then transformed into a convenience score.">
+      <div class="kicker">Evidence 3</div>
+      <h2>Location-aware calculation</h2>
+      <div class="formula">
+        Convenience = 1 - distance / max(radius × 1.15, 2)
+        <small>Distance is calculated from latitude and longitude using Haversine distance.</small>
+      </div>
+      <div class="calc-grid">
+        <div class="calc-box"><strong>Example</strong><p>With an 8 km radius and a restaurant 2 km away: convenience = 1 - 2 / 9.2 = 0.78.</p></div>
+        <div class="calc-box"><strong>Method score</strong><p>Location score = 58% convenience + 25% preference fit + 17% rating quality.</p></div>
+      </div>
+    </section>
+    <section class="slide" data-document-role="page" data-label="Evidence Hybrid Score" data-speaker-notes="This slide proves how the hybrid method combines the other recommendation signals into one final ranking score.">
+      <div class="kicker">Evidence 4</div>
+      <h2>Hybrid recommendation score</h2>
+      <div class="formula">
+        Final Score = 100 × (Qwq + Twt + Fwf + Cwc)
+        <small>Q = quality, T = collaborative taste, F = preference fit, C = convenience.</small>
+      </div>
+      <div class="calc-grid">
+        <div class="calc-box"><strong>Default weights</strong><p>Quality 34%, Taste 28%, Fit 24%, Convenience 14%.</p></div>
+        <div class="calc-box"><strong>Example</strong><p>If Q=.80, T=.70, F=.90, C=.78, final score = 100 × (.272 + .196 + .216 + .109) = 79.3%.</p></div>
+      </div>
+    </section>
+    <section class="slide dark" data-document-role="page" data-label="Conclusion" data-speaker-notes="The final system demonstrates how different recommendation techniques produce different restaurant shortlists.">
+      <div class="kicker">Conclusion</div>
+      <h2>Hybrid gives the strongest decision support.</h2>
+      <ul>
+        <li>Item-Based CF captures behavioral similarity.</li>
+        <li>Location-Aware recommendation captures practical context.</li>
+        <li>Hybrid combines behavior, context, and explicit preferences.</li>
+        <li>User choice makes the comparison visible.</li>
+        <li>Future work can add evaluation metrics and live feedback.</li>
+      </ul>
+      <div class="footer">End of presentation</div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f0e8" />
+    <meta name="description" content="An explainable restaurant recommender and decision support dashboard." />
+    <title>Savor — restaurant decision support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="onboarding-open">
+    <div class="noise" aria-hidden="true"></div>
+    <section class="onboarding-page" id="onboardingPage" aria-labelledby="onboardingTitle">
+      <header class="onboarding-nav">
+        <a class="brand" href="#" aria-label="Savor home"><span class="brand-mark">S</span><span>Savor</span></a>
+        <span><i></i> Personalized from 9 connected datasets</span>
+      </header>
+      <div class="onboarding-layout">
+        <div class="onboarding-story">
+          <span class="onboarding-kicker">Before we set the table</span>
+          <h1 id="onboardingTitle">What kind of dinner<br><em>are you joining?</em></h1>
+          <p>Tell us about tonight—not who you are in a dataset. We’ll use anonymous dining patterns to build a shortlist around the occasion.</p>
+          <div class="onboarding-proof">
+            <span><strong>130</strong> restaurants</span>
+            <span><strong>1,161</strong> ratings</span>
+            <span><strong>100%</strong> local processing</span>
+          </div>
+        </div>
+        <form class="onboarding-card" id="onboardingForm">
+          <div class="onboarding-progress"><span>Dining brief</span><i><b></b></i><span>1 of 1</span></div>
+
+          <fieldset>
+            <legend>Who are you dining with?</legend>
+            <div class="occasion-grid" id="occasionOptions">
+              <button type="button" class="occasion-option selected" data-occasion="family"><span>🍲</span><strong>Family dinner</strong><small>Warm and easygoing</small></button>
+              <button type="button" class="occasion-option" data-occasion="date"><span>🥂</span><strong>Date night</strong><small>Quiet and considered</small></button>
+              <button type="button" class="occasion-option" data-occasion="friends"><span>🍻</span><strong>With friends</strong><small>Social and lively</small></button>
+              <button type="button" class="occasion-option" data-occasion="solo"><span>📖</span><strong>Dining solo</strong><small>Simple and relaxed</small></button>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <div class="onboarding-label-row"><legend>What sounds good?</legend><span>Choose any</span></div>
+            <div class="onboarding-cuisines" id="onboardingCuisines"><span class="onboarding-loading">Reading the menu…</span></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Where are you dining?</legend>
+            <div class="location-control" id="onboardingLocation">
+              <button type="button" class="selected" data-location="slp"><strong>San Luis Potosí</strong><small>Central area</small></button>
+              <button type="button" data-location="cuernavaca"><strong>Cuernavaca</strong><small>Morelos</small></button>
+              <button type="button" data-location="victoria"><strong>Ciudad Victoria</strong><small>Tamaulipas</small></button>
+            </div>
+          </fieldset>
+
+          <div class="onboarding-split">
+            <fieldset>
+              <legend>Budget per person</legend>
+              <div class="segment-control" id="onboardingBudget">
+                <button type="button" data-budget="low">$<small>Low</small></button>
+                <button type="button" class="selected" data-budget="medium">$$<small>Medium</small></button>
+                <button type="button" data-budget="high">$$$<small>High</small></button>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="onboarding-label-row"><legend>How far?</legend><output id="onboardingDistanceOut">8 km</output></div>
+              <input id="onboardingDistance" type="range" min="1" max="40" value="8">
+              <div class="onboarding-range-labels"><span>Close by</span><span>Worth the trip</span></div>
+            </fieldset>
+          </div>
+
+          <fieldset>
+            <div class="onboarding-label-row"><legend>Anything essential?</legend><span>Optional</span></div>
+            <div class="essential-grid">
+              <label><input type="checkbox" id="onboardingParking"><span>🅿</span> Parking</label>
+              <label><input type="checkbox" id="onboardingAccess"><span>♿</span> Accessible</label>
+              <label><input type="checkbox" id="onboardingAlcohol"><span>🍷</span> Serves alcohol</label>
+            </div>
+          </fieldset>
+
+          <button class="onboarding-submit" id="startButton" type="submit" disabled><span>Building your dining model…</span><b>→</b></button>
+          <p class="privacy-note">No account needed. Your choices stay in this browser session.</p>
+        </form>
+      </div>
+    </section>
+
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Savor home">
+        <span class="brand-mark">S</span>
+        <span>Savor</span>
+      </a>
+      <nav aria-label="Page sections">
+        <a class="active" href="#recommendations">Recommendations</a>
+        <a href="#insights">Insights</a>
+        <a href="#methodology">Methodology</a>
+      </nav>
+      <button class="data-pill edit-profile" id="editProfile" type="button"><span></span><strong id="venueCount">—</strong> venues · edit dinner brief</button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="eyebrow">Decision support for dining</div>
+        <div class="hero-grid">
+          <div>
+            <h1>Find a place that<br><em>fits the moment.</em></h1>
+          </div>
+          <div class="hero-copy">
+            <p>Personalized suggestions grounded in real ratings, your taste profile, and practical constraints—not a black box.</p>
+            <div class="hero-stats">
+              <div><strong id="ratingCount">—</strong><span>recorded ratings</span></div>
+              <div><strong id="userCount">—</strong><span>taste profiles</span></div>
+              <div><strong id="dataCount">9</strong><span>connected datasets</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace" id="recommendations">
+        <aside class="control-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="step">01</span>
+              <h2>Your brief</h2>
+            </div>
+            <button class="text-button" id="resetBtn" type="button">Reset</button>
+          </div>
+
+          <input type="hidden" id="userSelect" value="">
+          <p class="brief-label">Tonight's dining profile</p>
+
+          <div class="profile-card" id="profileCard">
+            <div class="avatar" id="avatar">🍲</div>
+            <div>
+              <strong id="profileName">Your dinner brief</strong>
+              <span id="profileMeta">—</span>
+            </div>
+            <button class="history-badge" id="editProfileSide" type="button">Edit</button>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="algorithmSelect">Recommendation method</label>
+            <div class="select-wrap"><select id="algorithmSelect">
+              <option value="hybrid">Hybrid Recommendation</option>
+              <option value="item">Item-Based Collaborative Filtering</option>
+              <option value="location">Location-Aware Recommendation</option>
+            </select></div>
+            <p class="field-hint" id="algorithmSummary">Combines rating quality, collaborative taste, preference fit, and distance.</p>
+          </div>
+
+          <div class="field-block">
+            <div class="field-row">
+              <label class="field-label">Cuisine mood</label>
+              <button class="mini-button" type="button" id="clearCuisines">Clear</button>
+            </div>
+            <div class="chip-select" id="cuisineChips"></div>
+          </div>
+
+          <div class="two-fields">
+            <div>
+              <label class="field-label" for="priceSelect">Price</label>
+              <div class="select-wrap"><select id="priceSelect">
+                <option value="any">Any price</option>
+                <option value="low">$ · Low</option>
+                <option value="medium">$$ · Medium</option>
+                <option value="high">$$$ · High</option>
+              </select></div>
+            </div>
+            <div>
+              <label class="field-label" for="paymentSelect">Payment</label>
+              <div class="select-wrap"><select id="paymentSelect">
+                <option value="any">Any method</option>
+                <option value="cash">Cash</option>
+                <option value="VISA">Visa</option>
+                <option value="MasterCard-Eurocard">Mastercard</option>
+                <option value="American_Express">Amex</option>
+                <option value="bank_debit_cards">Debit card</option>
+              </select></div>
+            </div>
+          </div>
+
+          <div class="field-block range-block">
+            <div class="field-row">
+              <label class="field-label" for="distanceRange">Travel radius</label>
+              <output id="distanceOutput">8 km</output>
+            </div>
+            <input id="distanceRange" type="range" min="1" max="40" value="8" />
+            <div class="range-labels"><span>Nearby</span><span>Explore</span></div>
+          </div>
+
+          <div class="toggle-list">
+            <label class="toggle-row"><span><strong>Parking available</strong><small>Public, onsite, or valet</small></span><input type="checkbox" id="parkingToggle"><i></i></label>
+            <label class="toggle-row"><span><strong>Accessible entrance</strong><small>Partial or complete access</small></span><input type="checkbox" id="accessToggle"><i></i></label>
+            <label class="toggle-row"><span><strong>Alcohol served</strong><small>Wine, beer, or full bar</small></span><input type="checkbox" id="alcoholToggle"><i></i></label>
+          </div>
+
+          <button class="primary-button" type="button" id="recommendBtn">
+            <span>Update recommendations</span><span aria-hidden="true">↗</span>
+          </button>
+        </aside>
+
+        <div class="results-panel">
+          <div class="results-head">
+            <div>
+              <span class="step">02</span>
+              <h2>Your best options</h2>
+              <p id="resultSummary">Loading the recommendation model…</p>
+            </div>
+            <div class="results-actions">
+              <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search results" /></label>
+              <div class="select-wrap compact"><select id="sortSelect" aria-label="Sort results">
+                <option value="recommended">Best match</option>
+                <option value="rating">Highest rated</option>
+                <option value="distance">Nearest first</option>
+                <option value="confidence">Most evidence</option>
+              </select></div>
+            </div>
+          </div>
+
+          <div class="decision-strip" id="decisionStrip">
+            <div class="decision-callout">
+              <span class="spark">✦</span>
+              <div><strong id="decisionTitle">Analyzing tradeoffs</strong><p id="decisionText">Weighing quality, taste, fit, and convenience.</p></div>
+            </div>
+            <button type="button" id="tuneBtn">Tune priorities <span>＋</span></button>
+          </div>
+
+          <div class="priority-panel" id="priorityPanel" hidden>
+            <div class="priority-head"><strong>Decision priorities</strong><span>Adjust what matters most; weights rebalance automatically.</span></div>
+            <div class="priority-grid">
+              <label>Proven quality <output id="qualityWeightOut">34%</output><input id="qualityWeight" type="range" min="5" max="60" value="34"></label>
+              <label>Personal taste <output id="tasteWeightOut">28%</output><input id="tasteWeight" type="range" min="5" max="60" value="28"></label>
+              <label>Preference fit <output id="fitWeightOut">24%</output><input id="fitWeight" type="range" min="5" max="60" value="24"></label>
+              <label>Convenience <output id="convenienceWeightOut">14%</output><input id="convenienceWeight" type="range" min="5" max="60" value="14"></label>
+            </div>
+          </div>
+
+          <div class="loading-state" id="loadingState">
+            <span></span><span></span><span></span>
+            <p>Connecting ratings with restaurant details…</p>
+          </div>
+          <div class="results-grid" id="resultsGrid" aria-live="polite"></div>
+          <button class="show-more" type="button" id="showMoreBtn" hidden>Show more recommendations <span>↓</span></button>
+        </div>
+      </section>
+
+      <section class="insights-section" id="insights">
+        <div class="section-intro">
+          <span class="step">03</span>
+          <h2>Read the landscape.</h2>
+          <p>Context that helps you judge the shortlist—not just accept it.</p>
+        </div>
+        <div class="insights-grid">
+          <article class="insight-card map-card">
+            <div class="card-title"><div><span>Local view</span><h3>Recommendation map</h3></div><span class="legend-dot">● <i>Top matches</i></span></div>
+            <div class="mini-map" id="miniMap"></div>
+            <p class="map-note">Relative positions from the dataset. Distance is calculated with the Haversine formula.</p>
+          </article>
+          <article class="insight-card">
+            <div class="card-title"><div><span>Market signal</span><h3>Cuisine performance</h3></div><span id="cuisineScope">All venues</span></div>
+            <div class="bar-chart" id="cuisineChart"></div>
+          </article>
+          <article class="insight-card confidence-card">
+            <div class="card-title"><div><span>Evidence check</span><h3>Recommendation confidence</h3></div></div>
+            <div class="confidence-ring" id="confidenceRing"><div><strong>—</strong><span>overall</span></div></div>
+            <p id="confidenceText">Calculating evidence coverage from ratings and venue attributes.</p>
+            <div class="coverage-list" id="coverageList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="method-section" id="methodology">
+        <div class="method-copy">
+          <span class="step">How it works</span>
+          <h2 id="methodTitle">Hybrid Recommendation</h2>
+          <p>Choose between Item-Based Collaborative Filtering, Location-Aware Recommendation, and Hybrid Recommendation. The selected method controls the ranking shown above.</p>
+        </div>
+        <div class="method-steps">
+          <div><span>01</span><strong>Item-Based CF</strong><p>Compares restaurants by shared rating patterns, then recommends venues similar to restaurants the matched diner liked.</p></div>
+          <div><span>02</span><strong>Location-Aware</strong><p>Scores nearby restaurants higher while still respecting cuisine, budget, parking, access, alcohol, and payment context.</p></div>
+          <div><span>03</span><strong>Hybrid</strong><p>Combines Bayesian quality, item/user collaborative taste, preference fit, and travel convenience.</p></div>
+          <div><span>04</span><strong>Comparison</strong><p>Switch the method to compare how behavior-based, context-based, and hybrid rankings change the shortlist.</p></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="compare-dock" id="compareDock" hidden>
+      <div><span>Compare shortlist</span><div id="compareNames"></div></div>
+      <button id="clearCompare" class="text-button" type="button">Clear</button>
+      <button id="openCompare" class="compare-button" type="button">Compare <span id="compareCount">0</span></button>
+    </div>
+
+    <dialog id="compareDialog">
+      <div class="dialog-head"><div><span class="step">Decision table</span><h2>Compare your shortlist</h2></div><button id="closeCompare" aria-label="Close comparison">×</button></div>
+      <div class="compare-table-wrap" id="compareTable"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
