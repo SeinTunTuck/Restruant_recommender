@@ -1,3 +1,129 @@
+Restaurant Recommendation System
+================================
+
+This project is a restaurant recommender system using the Restaurant & Consumer
+dataset. It includes two runnable versions:
+
+1. A custom Vite web app built with HTML, CSS, and JavaScript.
+2. A Streamlit app built with Python for easier online sharing.
+
+Recommendation Methods
+----------------------
+
+The app supports three selectable recommendation methods:
+
+1. Item-Based Collaborative Filtering
+   - Compares restaurants using shared user-rating patterns.
+   - Uses cosine similarity between restaurant rating vectors.
+   - Recommends restaurants similar to venues liked by the matched user.
+
+2. Location-Aware Recommendation
+   - Uses the selected dining area and restaurant latitude/longitude.
+   - Calculates distance with the Haversine formula.
+   - Prioritizes nearby restaurants while respecting filters.
+
+3. Hybrid Recommendation
+   - Combines multiple signals into one final score.
+   - Uses rating quality, collaborative taste, preference fit, and convenience.
+   - Default formula:
+
+     Final score = 100 * (
+       0.34 * quality +
+       0.28 * item taste +
+       0.24 * preference fit +
+       0.14 * convenience
+     )
+
+Project Files
+-------------
+
+- `index.html` - main page for the Vite web app
+- `app.js` - JavaScript recommender logic and UI behavior
+- `styles.css` - custom web app styling
+- `streamlit_app.py` - Streamlit version for sharing online
+- `requirements.txt` - Python dependencies for Streamlit
+- `dataset/` - restaurant, user, rating, cuisine, payment, parking, and hours CSV files
+- `canva-restaurant-recommender.html` - presentation source imported into Canva
+
+Run the Vite Web App
+--------------------
+
+Use this version when you want the full custom interface.
+
+```bash
+cd /Users/xkuan/Documents/Uni/1_2026/DSARS/project/restaurant
+npm install
+npm run dev
+```
+
+Then open the local URL printed by Vite, usually:
+
+```text
+http://127.0.0.1:5173/
+```
+
+If that port is busy, Vite may use another port such as `5174`.
+
+Run the Streamlit App
+---------------------
+
+Use this version when you want to share the project more easily.
+
+```bash
+cd /Users/xkuan/Documents/Uni/1_2026/DSARS/project/restaurant
+pip3 install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+If `streamlit` is not found, use:
+
+```bash
+python3 -m streamlit run streamlit_app.py
+```
+
+Then open:
+
+```text
+http://localhost:8501
+```
+
+Share with Streamlit Community Cloud
+------------------------------------
+
+1. Create a GitHub repository.
+2. Upload this `restaurant` project folder to the repository.
+3. Make sure these files are included:
+   - `streamlit_app.py`
+   - `requirements.txt`
+   - `dataset/`
+4. Go to https://share.streamlit.io/
+5. Sign in with GitHub.
+6. Click **New app**.
+7. Select your repository and branch.
+8. Set the main file path to:
+
+```text
+streamlit_app.py
+```
+
+9. Click **Deploy**.
+
+Streamlit will create a public URL that can be shared with others.
+
+Notes
+-----
+
+- `node_modules/`, `dist/`, Python cache files, Streamlit secrets, and `.env`
+  files are ignored by `.gitignore`.
+- The Vite and Streamlit apps are not visually identical. The Vite version has
+  the richer custom UI, while the Streamlit version is optimized for quick
+  sharing and deployment.
+- Both versions use the same dataset and the same three recommendation method
+  concepts.
+
+Original Dataset Description
+============================
+
 1. Title of Database: Restaurant & consumer data, recommender systems domain
 
 2. Sources:

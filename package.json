@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "streamlit": "streamlit run streamlit_app.py",
+    "streamlit:python": "python3 -m streamlit run streamlit_app.py"
   },
   "devDependencies": {
     "vite": "^7.0.0"
