@@ -323,14 +323,21 @@ function restaurantCard(p, index) {
   const icon = cuisineIcons[cuisine] || (p.alcohol === 'Full_Bar' ? '🍹' : '🍽️');
   const stars = '★'.repeat(Math.round(p.rawQuality / 2 * 5)) + '☆'.repeat(5 - Math.round(p.rawQuality / 2 * 5));
   const tags = [p.cuisines[0] && title(p.cuisines[0]), priceLabel(p.price), p.parking[0] !== 'none' && p.parking[0] !== 'unknown' && 'Parking'].filter(Boolean);
+  const method = algorithmMeta[state.algorithm].label;
   return `<article class="restaurant-card">
     <div class="card-visual" style="--c1:${palette[0]};--c2:${palette[1]}">
-      <span class="rank-badge">#${index + 1} match</span><span class="food-icon" aria-hidden="true">${icon}</span>
+      <span class="rank-badge">#${index + 1} · ${method}</span><span class="food-icon" aria-hidden="true">${icon}</span>
       <button type="button" class="compare-check ${state.compare.has(p.placeID) ? 'selected' : ''}" data-compare="${p.placeID}">${state.compare.has(p.placeID) ? '✓ Added' : '+ Compare'}</button>
     </div>
     <div class="card-body">
       <div class="card-topline"><div style="min-width:0"><h3 title="${p.name}">${clean(p.name)}</h3><p class="location">${clean(p.city) || clean(p.state) || 'Mexico'} · ${p.distance.toFixed(1)} km away</p></div><div class="score"><strong>${Math.round(p.score)}</strong><span>match</span></div></div>
+      <div class="score-track"><span style="width:${clamp(p.score / 100) * 100}%"></span></div>
       <div class="tags">${tags.map((t,i) => `<span class="tag ${i === 0 && state.selectedCuisines.has(p.cuisines[0]) ? 'match' : ''}">${t}</span>`).join('')}</div>
+      <div class="card-metrics">
+        <div><strong>${p.rawQuality.toFixed(1)}</strong><span>Rating</span></div>
+        <div><strong>${p.distance.toFixed(1)}</strong><span>Km</span></div>
+        <div><strong>${p.collabEvidence}</strong><span>Signals</span></div>
+      </div>
       <div class="rating-row"><span class="stars" aria-label="${p.rawQuality.toFixed(1)} out of 2">${stars}</span><strong>${p.rawQuality.toFixed(1)}/2</strong><span>${p.reviewCount} ratings · ${Math.round(p.confidence*100)}% confidence</span></div>
       <p class="reason"><b>✦</b><span>${p.reason}${p.seen ? ' · You have rated this venue' : ''}</span></p>
     </div>
@@ -497,6 +504,8 @@ async function init() {
     $('#venueCount').textContent = state.data.places.length;
     $('#ratingCount').textContent = state.data.ratings.length.toLocaleString();
     $('#userCount').textContent = state.data.profiles.length;
+    $('#toolbarVenueCount').textContent = state.data.places.length;
+    $('#toolbarRatingCount').textContent = state.data.ratings.length.toLocaleString();
     populateControls(); bindEvents(); syncOnboardingUI(); updateMethodUI();
   } catch (error) {
     console.error(error); $('#loadingState').innerHTML = `<p>Could not load the CSV data. Start this page through the local dev server.</p>`;

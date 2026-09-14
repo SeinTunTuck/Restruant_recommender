@@ -3,9 +3,12 @@ dist/
 
 __pycache__/
 *.py[cod]
+venv/
+.venv/
 .streamlit/secrets.toml
 
 .DS_Store
 .env
 .env.*
 !.env.example
+canva-restaurant-recommender.html

@@ -120,6 +120,7 @@
 
       <section class="workspace" id="recommendations">
         <aside class="control-panel">
+          <div class="panel-status"><span></span> Live recommender</div>
           <div class="panel-heading">
             <div>
               <span class="step">01</span>
@@ -202,6 +203,16 @@
         </aside>
 
         <div class="results-panel">
+          <div class="results-toolbar">
+            <div>
+              <span>Recommendation workspace</span>
+              <strong>Restaurant shortlist</strong>
+            </div>
+            <div class="toolbar-metrics">
+              <span><b id="toolbarVenueCount">—</b> venues</span>
+              <span><b id="toolbarRatingCount">—</b> ratings</span>
+            </div>
+          </div>
           <div class="results-head">
             <div>
               <span class="step">02</span>
@@ -225,6 +236,12 @@
               <div><strong id="decisionTitle">Analyzing tradeoffs</strong><p id="decisionText">Weighing quality, taste, fit, and convenience.</p></div>
             </div>
             <button type="button" id="tuneBtn">Tune priorities <span>＋</span></button>
+          </div>
+
+          <div class="method-comparison">
+            <div><span>01</span><strong>Item-Based CF</strong><small>Behavior similarity</small></div>
+            <div><span>02</span><strong>Location-Aware</strong><small>Distance context</small></div>
+            <div><span>03</span><strong>Hybrid</strong><small>Balanced decision</small></div>
           </div>
 
           <div class="priority-panel" id="priorityPanel" hidden>
